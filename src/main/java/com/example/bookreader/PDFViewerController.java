@@ -2,6 +2,7 @@ package com.example.bookreader;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,8 @@ public class PDFViewerController {
     private TextField searchField;
     @FXML
     private MediaView mediaView;
+    @FXML
+    private ScrollPane scrollPane;
 
     private PDDocument document;
     private PDFRenderer pdfRenderer;
@@ -45,8 +48,14 @@ public class PDFViewerController {
 
     public void loadPDF(String filePath) {
         try {
+            // Close the existing document if any
+            if (document != null) {
+                document.close();
+            }
+            // Load the new document
             document = PDDocument.load(new File(filePath));
             pdfRenderer = new PDFRenderer(document);
+            currentPage = 0; // Reset to the first page
             showPage(currentPage);
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +72,7 @@ public class PDFViewerController {
                 imageView.setPreserveRatio(true);
 
                 pdfViewerPane.setCenter(imageView);
+                scrollPane.setContent(pdfViewerPane);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -12,6 +12,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/bookreader/book-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        scene.getStylesheets().add(getClass().getResource("/com/example/bookreader/styles.css").toExternalForm());
         stage.setTitle("Book Reader");
         stage.setScene(scene);
         stage.show();
